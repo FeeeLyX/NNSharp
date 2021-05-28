@@ -26,7 +26,7 @@ class JSONwriter:
         w_org = model.get_weights()
         
         # First the input layer
-        inp_sizes = conf[0]['config']['batch_input_shape']
+        inp_sizes = conf['layers'][0]['config']['batch_input_shape']
         layer_input = {}
         if len(inp_sizes) == 3:
             layer_input = {'layer':'Input2D', 'height':1, 'width':inp_sizes[1], 'channel':inp_sizes[2]}
@@ -42,9 +42,9 @@ class JSONwriter:
             
         # Remaining layers
         num = len(conf)
-        for idx in range(0, num):
-            layer = self.__get_layer(conf[idx])
-            self.__get_weight(weights, w_org, conf[idx])
+        for idx in range(1, num):
+            layer = self.__get_layer(conf['layers'][idx])
+            self.__get_weight(weights, w_org, conf['layers'][idx])
             for l in layer:
                 md['descriptors'].append(l)
             
